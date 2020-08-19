@@ -20,13 +20,9 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Optional<Issue> findById(UUID id) {
-        List<Row> result = cqlSession.execute(SimpleStatement.newInstance("SELECT * from issue where id = ?", id)).all();
-        if (result.size() == 1) {
-            return Optional.of(mapToIssue(result.get(0)));
-        }
-        else {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(
+                cqlSession.execute(SimpleStatement.newInstance("SELECT * from issue where id = ?", id)).one()
+        ).map(this::mapToIssue);
     }
 
     @Override
