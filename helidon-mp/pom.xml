@@ -45,6 +45,11 @@
             <artifactId>jersey-media-json-binding</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.datastax.oss</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>4.8.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>javax.activation-api</artifactId>
             <scope>runtime</scope>
@@ -72,12 +77,6 @@
             <artifactId>jandex</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.7</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.helidon.integrations.cdi</groupId>

@@ -1,9 +1,5 @@
-javax:
-  sql:
-    DataSource:
-      dataSource:
-        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
-        dataSource:
-          url: jdbc:postgresql://postgres:5432/postgres
-          user: postgres
-          password: postgres
+cassandra:
+  keyspace: ks1
+  secure-connect-bundle: ../../compare/secure-connect-framework-compare.zip
+  username: datastax
+  password: datastax
