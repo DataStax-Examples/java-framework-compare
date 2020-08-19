@@ -1,49 +1,60 @@
 package lizzy.medium.compare.quarkus;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
+import com.datastax.oss.quarkus.runtime.api.session.QuarkusCqlSession;
 
 @ApplicationScoped
 public class RepositoryImpl implements Repository {
-    @SuppressWarnings("WeakerAccess")
-    @PersistenceContext
-    EntityManager entityManager;
+
+    @Inject
+    private QuarkusCqlSession cqlSession;
 
     @Override
     public Optional<Issue> findById(UUID id) {
-        return Optional.ofNullable(entityManager.find(Issue.class, id));
+        List<Row> result = cqlSession.execute(SimpleStatement.newInstance("SELECT * from issue where id = ?", id)).all();
+        if (result.size() == 1) {
+            return Optional.of(mapToIssue(result.get(0)));
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Issue insert(Issue issue) {
-        entityManager.persist(issue);
+        cqlSession.execute(SimpleStatement.newInstance("INSERT INTO issue(id, name, description) VALUES (?,?,?)", issue.getId(), issue.getName(), issue.getDescription()));
         return issue;
     }
 
     @Override
     public void deleteById(UUID id) {
-        findById(id).ifPresent(issue -> entityManager.remove(issue));
+        cqlSession.execute(SimpleStatement.newInstance("DELETE from issue where id = ?", id));
     }
 
     @Override
     public List<Issue> findAll() {
-        String qlString = "SELECT g FROM Issue as g";
-        TypedQuery<Issue> query = entityManager.createQuery(qlString, Issue.class);
-        return query.getResultList();
+        ResultSet result = cqlSession.execute(SimpleStatement.newInstance("SELECT * FROM issue"));
+        return result.all().stream().map(this::mapToIssue).collect(Collectors.toList());
     }
 
     @Override
     public Issue update(Issue issue) {
-        entityManager.createQuery("UPDATE Issue g SET name = :name, description = :description where id = :id")
-                .setParameter("name", issue.getName())
-                .setParameter("description", issue.getDescription())
-                .setParameter("id", issue.getId())
-                .executeUpdate();
+        cqlSession.execute(SimpleStatement.newInstance("UPDATE issue SET name = ?, description = ? WHERE ID = ?",
+                issue.getName(), issue.getDescription(), issue.getId()));
         return findById(issue.getId()).orElseThrow(RuntimeException::new);
+    }
+
+
+    private Issue mapToIssue(Row row) {
+        return new Issue(row.getUuid("id"), row.getString("name"), row.getString("description"));
     }
 }
