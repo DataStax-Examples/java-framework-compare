@@ -1,9 +1,16 @@
 package lizzy.medium.compare.micronaut;
 
-import io.micronaut.data.repository.CrudRepository;
-
+import java.util.Optional;
 import java.util.UUID;
 
-@io.micronaut.data.annotation.Repository
-interface Repository extends CrudRepository<Issue, UUID> {
+interface Repository {
+    Optional<Issue> findById(UUID id);
+
+    Issue insert(Issue body);
+
+    Issue update(Issue body);
+
+    void deleteById(UUID id);
+
+    Iterable<Issue> findAll();
 }

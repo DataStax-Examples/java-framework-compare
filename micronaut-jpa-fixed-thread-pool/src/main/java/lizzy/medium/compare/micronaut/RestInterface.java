@@ -1,12 +1,19 @@
 package lizzy.medium.compare.micronaut;
 
-import io.micronaut.http.annotation.*;
-import lombok.RequiredArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Patch;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import lombok.RequiredArgsConstructor;
 
 @Controller("/issue")
 @RequiredArgsConstructor
@@ -27,7 +34,7 @@ public class RestInterface {
 
     @Post
     public Issue create(@Body Issue body) {
-        return repository.save(body);
+        return repository.insert(body);
     }
 
     @Put("/{id}/")
