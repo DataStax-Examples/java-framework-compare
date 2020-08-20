@@ -4,110 +4,102 @@ services:
   spring:
     build:
       context: ../spring/
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   spring-jdbc:
     build:
       context: ../spring-jdbc/
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jpa:
     build:
       context: ../micronaut-jpa/
       dockerfile: Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jpa-graal:
     build:
       context: ../micronaut-jpa/
       dockerfile: Dockerfile.native
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jdbc:
     build:
       context: ../micronaut-jdbc/
       dockerfile: Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jdbc-graal:
     build:
       context: ../micronaut-jdbc/
       dockerfile: Dockerfile.native
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jpa-fixed-thread-pool:
     build:
       context: ../micronaut-jpa-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jpa-fixed-thread-pool-graal:
     build:
       context: ../micronaut-jpa-fixed-thread-pool/
       dockerfile: Dockerfile.native
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jdbc-fixed-thread-pool:
     build:
       context: ../micronaut-jdbc-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-jdbc-fixed-thread-pool-graal:
     build:
       context: ../micronaut-jdbc-fixed-thread-pool/
       dockerfile: Dockerfile.native
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   helidon-mp:
     build:
       context: ../helidon-mp/
       dockerfile: Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   quarkus:
     build:
       context: ../quarkus/
       dockerfile: src/main/docker/Dockerfile.jvm
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   quarkus-graal:
     build:
       context: ../quarkus/
       dockerfile: src/main/docker/Dockerfile.native
-    depends_on:
-      - postgres
+    volumes:
+      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
- 
- 
-  postgres:
-    image: postgres
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "5432:5432"
