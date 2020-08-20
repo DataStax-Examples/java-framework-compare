@@ -12,10 +12,9 @@ function check(){
 }
 
 function prepareDocker () {
-    # Delete everything and set up postgres new
+    # Delete everything
     docker-compose stop
     docker-compose rm -f
-    docker-compose up --build -d postgres
 }
 
 function compileTime(){
@@ -181,7 +180,6 @@ function prepareForLoad() {
     # We have to freshly set up the container (incl db) to avoid follow up effects
     docker-compose stop
     docker-compose rm -f
-    docker-compose up --build -d postgres
     sleep 10;
     startContainer "$1"
 }
