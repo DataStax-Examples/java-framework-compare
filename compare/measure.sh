@@ -197,11 +197,11 @@ rm -f results.csv
 
 check "helidon-mp"     "helidon-mp"
 check "spring"         "spring"
-check "spring-jdbc"    "spring-jdbc"
+check "spring-driver"    "spring-driver"
 check "quarkus"        "quarkus"
-check "micronaut-jdbc" "micronaut-jdbc"
-check "micronaut-jpa"  "micronaut-jpa"
+check "micronaut-driver" "micronaut-driver"
+check "micronaut-mapper"  "micronaut-mapper"
+check "micronaut-driver-fixed-thread-pool" "micronaut-driver-fixed-thread-pool"
+check "micronaut-mapper-fixed-thread-pool" "micronaut-mapper-fixed-thread-pool"
 check "quarkus"        "quarkus-graal"        "-Pnative -Dquarkus.native.container-build=true"
-check "micronaut-jdbc-fixed-thread-pool" "micronaut-jdbc-fixed-thread-pool"
-check "micronaut-jpa-fixed-thread-pool" "micronaut-jpa-fixed-thread-pool"
 cat results.csv;

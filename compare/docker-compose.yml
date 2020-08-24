@@ -8,72 +8,72 @@ services:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  spring-jdbc:
+  spring-driver:
     build:
-      context: ../spring-jdbc/
+      context: ../spring-driver/
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jpa:
+  micronaut-mapper:
     build:
-      context: ../micronaut-jpa/
+      context: ../micronaut-mapper/
       dockerfile: Dockerfile.jvm
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jpa-graal:
+  micronaut-mapper-graal:
     build:
-      context: ../micronaut-jpa/
+      context: ../micronaut-mapper/
       dockerfile: Dockerfile.native
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jdbc:
+  micronaut-driver:
     build:
-      context: ../micronaut-jdbc/
+      context: ../micronaut-driver/
       dockerfile: Dockerfile.jvm
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jdbc-graal:
+  micronaut-driver-graal:
     build:
-      context: ../micronaut-jdbc/
+      context: ../micronaut-driver/
       dockerfile: Dockerfile.native
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jpa-fixed-thread-pool:
+  micronaut-mapper-fixed-thread-pool:
     build:
-      context: ../micronaut-jpa-fixed-thread-pool/
+      context: ../micronaut-mapper-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jpa-fixed-thread-pool-graal:
+  micronaut-mapper-fixed-thread-pool-graal:
     build:
-      context: ../micronaut-jpa-fixed-thread-pool/
+      context: ../micronaut-mapper-fixed-thread-pool/
       dockerfile: Dockerfile.native
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jdbc-fixed-thread-pool:
+  micronaut-driver-fixed-thread-pool:
     build:
-      context: ../micronaut-jdbc-fixed-thread-pool/
+      context: ../micronaut-driver-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
-  micronaut-jdbc-fixed-thread-pool-graal:
+  micronaut-driver-fixed-thread-pool-graal:
     build:
-      context: ../micronaut-jdbc-fixed-thread-pool/
+      context: ../micronaut-driver-fixed-thread-pool/
       dockerfile: Dockerfile.native
     volumes:
       - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
