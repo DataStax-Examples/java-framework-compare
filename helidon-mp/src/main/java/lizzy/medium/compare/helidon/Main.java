@@ -1,4 +1,4 @@
-package lizzy.medium.compare.helidon;
+package com.datastax.examples.helidon;
 
 import io.helidon.microprofile.server.Server;
 

@@ -1,4 +1,4 @@
-package lizzy.medium.compare.spring;
+package com.datastax.examples.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

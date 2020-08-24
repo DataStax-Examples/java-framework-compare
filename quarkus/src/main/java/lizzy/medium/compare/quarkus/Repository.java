@@ -1,4 +1,4 @@
-package lizzy.medium.compare.quarkus;
+package com.datastax.examples.quarkus;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package lizzy.medium.compare.quarkus;
+package com.datastax.examples.quarkus;
 
 import java.util.List;
 import java.util.Optional;

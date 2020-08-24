@@ -1,4 +1,4 @@
-package lizzy.medium.compare.spring;
+package com.datastax.examples.spring;
 
 import java.nio.file.Paths;
 
@@ -47,6 +47,6 @@ public class SpringDataCassandraConfiguration extends AbstractCassandraConfigura
 
     @Override
     public String[] getEntityBasePackages() {
-        return new String[]{ "lizzy.medium.compare.spring" };
+        return new String[]{ "com.datastax.examples.spring" };
     }
 }

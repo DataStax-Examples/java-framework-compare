@@ -27,12 +27,12 @@
         <version>1.4.1</version>
         <relativePath/>
     </parent>
-    <groupId>lizzy.medium.compare</groupId>
+    <groupId>com.datastax.examples</groupId>
     <artifactId>helidon-mp</artifactId>
     <name>${project.artifactId}</name>
 
     <properties>
-        <mainClass>lizzy.medium.compare.helidon.Main</mainClass>
+        <mainClass>com.datastax.examples.helidon.Main</mainClass>
     </properties>
 
     <dependencies>

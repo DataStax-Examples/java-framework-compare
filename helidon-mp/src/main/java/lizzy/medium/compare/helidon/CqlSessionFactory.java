@@ -1,4 +1,4 @@
-package lizzy.medium.compare.helidon;
+package com.datastax.examples.helidon;
 
 import java.nio.file.Paths;
 import javax.enterprise.context.ApplicationScoped;

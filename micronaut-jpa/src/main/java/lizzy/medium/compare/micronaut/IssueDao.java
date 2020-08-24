@@ -1,4 +1,4 @@
-package lizzy.medium.compare.micronaut;
+package com.datastax.examples.micronaut;
 
 import java.util.UUID;
 

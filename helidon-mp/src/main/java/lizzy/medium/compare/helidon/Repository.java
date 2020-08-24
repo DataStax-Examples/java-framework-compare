@@ -1,4 +1,4 @@
-package lizzy.medium.compare.helidon;
+package com.datastax.examples.helidon;
 
 import java.util.Optional;
 import java.util.UUID;

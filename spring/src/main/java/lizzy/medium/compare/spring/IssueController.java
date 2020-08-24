@@ -1,4 +1,4 @@
-package lizzy.medium.compare.spring;
+package com.datastax.examples.spring;
 
 import java.util.ArrayList;
 import java.util.List;

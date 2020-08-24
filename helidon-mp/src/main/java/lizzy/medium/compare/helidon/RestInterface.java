@@ -1,4 +1,4 @@
-package lizzy.medium.compare.helidon;
+package com.datastax.examples.helidon;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
