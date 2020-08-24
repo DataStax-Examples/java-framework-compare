@@ -1,0 +1,56 @@
+= medium-java-framework-compare
+
+== Pre-requisites
+
+Before running the
+[source,shell]
+----
+cd compare
+./measure.sh
+----
+
+=== jmeter
+
+Install the jmeter tool and make it available via global `jmeter` command;
+This tool is using `jmeter` for load-testing, i.e: `jmeter -n -t loadtest.jmx -j jmeter.out -l jmeter.log`
+To see more info on how to install JMeter, visit the link:https://jmeter.apache.org/usermanual/get-started.html#install[installation guide].
+If you are on Mac OSX you can leverage the brew tool:
+[source,shell]
+----
+brew install jmeter
+----
+  
+=== Astra Secure Connect Bundle
+set the ENV variable `ASTRA_PATH` to the location of the secure connect bundle on your local file system.
+[source,shell]
+----
+export ASTRA_PATH=/path/to/your/local/secure-connect-framework-compare.zip 
+----
+
+=== Java JDK
+
+Install Java SDK (at least 1.8)
+
+=== Docker
+
+Install Docker: it is used to run the all microservices in this project:
+
+* Check link:https://docs.docker.com/install/[the installation guide],
+and link:https://docs.docker.com/docker-for-mac/install/[the MacOS installation guide];
+* If you just installed docker, be sure that your current user can run a container (no root
+required). On Linux, check
+link:https://docs.docker.com/install/linux/linux-postinstall/[the post-installation guide].
+
+=== GraalVM
+If you want to run and collect measurements for quarkus-graal project, you need to have GraalVM installed:
+
+* Install link:https://quarkus.io/guides/building-native-image[GraalVM];
+* Install platform C developer tools:
+    ** Linux:
+        *** Make sure header files are installed on your system.
+            **** On Fedora `sudo dnf install zlib-devel`;
+            **** Otherwise `sudo apt-get install libz-dev`;
+    ** macOS:
+        *** `xcode-select --install`;
+* Set `GRAALVM_HOME` to your GraalVM Home directory e.g. `/opt/graalvm` on Linux or
+  `/path/to/GraalVM/Contents/Home` on macOS;
