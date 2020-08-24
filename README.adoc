@@ -21,10 +21,10 @@ brew install jmeter
 ----
   
 === Astra Secure Connect Bundle
-set the ENV variable `ASTRA_PATH` to the location of the secure connect bundle on your local file system.
+set the ENV variable `ASTRA_DB_BUNDLE` to the location of the secure connect bundle on your local file system.
 [source,shell]
 ----
-export ASTRA_PATH=/path/to/your/local/secure-connect-framework-compare.zip 
+export ASTRA_DB_BUNDLE=/path/to/your/local/secure-connect-framework-compare.zip
 ----
 
 === Java JDK

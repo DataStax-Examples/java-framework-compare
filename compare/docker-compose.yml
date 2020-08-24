@@ -5,14 +5,14 @@ services:
     build:
       context: ../spring/
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   spring-driver:
     build:
       context: ../spring-driver/
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-mapper:
@@ -20,7 +20,7 @@ services:
       context: ../micronaut-mapper/
       dockerfile: Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-mapper-graal:
@@ -28,7 +28,7 @@ services:
       context: ../micronaut-mapper/
       dockerfile: Dockerfile.native
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-driver:
@@ -36,7 +36,7 @@ services:
       context: ../micronaut-driver/
       dockerfile: Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-driver-graal:
@@ -44,7 +44,7 @@ services:
       context: ../micronaut-driver/
       dockerfile: Dockerfile.native
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-mapper-fixed-thread-pool:
@@ -52,7 +52,7 @@ services:
       context: ../micronaut-mapper-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-mapper-fixed-thread-pool-graal:
@@ -60,7 +60,7 @@ services:
       context: ../micronaut-mapper-fixed-thread-pool/
       dockerfile: Dockerfile.native
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-driver-fixed-thread-pool:
@@ -68,7 +68,7 @@ services:
       context: ../micronaut-driver-fixed-thread-pool/
       dockerfile: Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   micronaut-driver-fixed-thread-pool-graal:
@@ -76,7 +76,7 @@ services:
       context: ../micronaut-driver-fixed-thread-pool/
       dockerfile: Dockerfile.native
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   helidon-mp:
@@ -84,7 +84,7 @@ services:
       context: ../helidon-mp/
       dockerfile: Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   quarkus:
@@ -92,7 +92,7 @@ services:
       context: ../quarkus/
       dockerfile: src/main/docker/Dockerfile.jvm
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
   quarkus-graal:
@@ -100,6 +100,6 @@ services:
       context: ../quarkus/
       dockerfile: src/main/docker/Dockerfile.native
     volumes:
-      - ${ASTRA_PATH}:/var/secure-connect-framework-compare.zip
+      - ${ASTRA_DB_BUNDLE}:/var/secure-connect-framework-compare.zip
     ports:
       - "8080:8080"
