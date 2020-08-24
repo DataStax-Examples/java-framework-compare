@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>lizzy.medium.compare</groupId>
+  <groupId>com.datastax.examples</groupId>
   <artifactId>quarkus</artifactId>
   <version>0.1.0</version>
   <properties>
@@ -12,18 +12,22 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus-plugin.version>1.1.0.Final</quarkus-plugin.version>
-    <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.1.0.Final</quarkus.platform.version>
+    <quarkus.version>1.5.0.Final</quarkus.version>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>${quarkus.platform.artifact-id}</artifactId>
-        <version>${quarkus.platform.version}</version>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-bom</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.datastax.oss.quarkus</groupId>
+        <artifactId>cassandra-quarkus-bom</artifactId>
+        <version>1.0.0-alpha3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -40,17 +44,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.datastax.oss.quarkus</groupId>
+      <artifactId>cassandra-quarkus-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -68,7 +68,7 @@
       <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus-plugin.version}</version>
+        <version>${quarkus.version}</version>
         <executions>
           <execution>
             <goals>

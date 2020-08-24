@@ -12,10 +12,9 @@ function check(){
 }
 
 function prepareDocker () {
-    # Delete everything and set up postgres new
+    # Delete everything
     docker-compose stop
     docker-compose rm -f
-    docker-compose up --build -d postgres
 }
 
 function compileTime(){
@@ -25,12 +24,12 @@ function compileTime(){
         clean "$1"
 
 	#Build the application and store the time needed to results
-        startNS=$(date +"%s%N")
+        startMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
         compile "$1" "$3"
         buildImage "$2"
-        endNS=$(date +"%s%N")
-        compiletime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
-        echo "$2, Compile time, $compiletime" >> results.csv
+        endMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
+        compiletime=$((endMS - startMS))
+        echo "$2, Compile time, $compiletime milliseconds" >> results.csv
     done
 }
 
@@ -71,11 +70,11 @@ function startup(){
         disposeContainer "$1"
 
         #Start the container and measure how long it takes untill we get a valid result
-        startNS=$(date +"%s%N")
+        startMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
         startContainer "$1"
-        endNS=$(date +"%s%N")
-        startuptime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
-	echo "$1, Startup time, $startuptime" >> results.csv
+        endMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
+        startuptime=$((endMS - startMS))
+	      echo "$1, Startup time, $startuptime milliseconds" >> results.csv
 
         #Measure memory
         memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1" | awk 'match($0,/[0-9\.]+/) {print substr($0, RSTART, RLENGTH)}')
@@ -159,11 +158,11 @@ function load() {
     for (( load=0; load<LOAD_TIMES; load++))
     do
 	prepareForLoad "$1"
-        startNS=$(date +"%s%N")
+        startMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
         jmeter -n -t loadtest.jmx -j jmeter.out -l jmeter.log
-        endNS=$(date +"%s%N")
+        endMS=$(ruby -e 'puts (Time.now.to_f * 1000).to_i')
         memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1" | awk 'match($0,/[0-9\.]+/) {print substr($0, RSTART, RLENGTH)}')
-        loadtime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
+        loadtime=$((endMS - startMS))
 
         tail -1 jmeter.out | grep "Err: *0 ("
         if [ $? -ne 0 ]
@@ -172,7 +171,7 @@ function load() {
             echo "$1, Load Time, FAIL" >> results.csv
 	else
             echo "$1, Memory Usage (Load), $memory" >> results.csv
-            echo "$1, Load Time, $loadtime" >> results.csv
+            echo "$1, Load Time, $loadtime milliseconds" >> results.csv
         fi
     done
 }
@@ -181,7 +180,6 @@ function prepareForLoad() {
     # We have to freshly set up the container (incl db) to avoid follow up effects
     docker-compose stop
     docker-compose rm -f
-    docker-compose up --build -d postgres
     sleep 10;
     startContainer "$1"
 }
@@ -199,15 +197,11 @@ rm -f results.csv
 
 check "helidon-mp"     "helidon-mp"
 check "spring"         "spring"
-check "spring-jdbc"    "spring-jdbc"
+check "spring-driver"    "spring-driver"
 check "quarkus"        "quarkus"
-check "micronaut-jdbc" "micronaut-jdbc"
-check "micronaut-jpa"  "micronaut-jpa"
+check "micronaut-driver" "micronaut-driver"
+check "micronaut-mapper"  "micronaut-mapper"
+check "micronaut-driver-fixed-thread-pool" "micronaut-driver-fixed-thread-pool"
+check "micronaut-mapper-fixed-thread-pool" "micronaut-mapper-fixed-thread-pool"
 check "quarkus"        "quarkus-graal"        "-Pnative -Dquarkus.native.container-build=true"
-check "micronaut-jdbc" "micronaut-jdbc-graal"
-check "micronaut-jpa"  "micronaut-jpa-graal"
-check "micronaut-jdbc-fixed-thread-pool" "micronaut-jdbc-fixed-thread-pool"
-check "micronaut-jdbc-fixed-thread-pool" "micronaut-jdbc-fixed-thread-pool-graal"
-check "micronaut-jpa-fixed-thread-pool" "micronaut-jpa-fixed-thread-pool"
-check "micronaut-jpa-fixed-thread-pool" "micronaut-jpa-fixed-thread-pool-graal"
 cat results.csv;

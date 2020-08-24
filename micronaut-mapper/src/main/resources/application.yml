@@ -1,0 +1,10 @@
+---
+micronaut:
+  application:
+    name: micronaut
+
+cassandra:
+  keyspace: ks1
+  secure-connect-bundle: /var/secure-connect-framework-compare.zip
+  username: datastax
+  password: datastax

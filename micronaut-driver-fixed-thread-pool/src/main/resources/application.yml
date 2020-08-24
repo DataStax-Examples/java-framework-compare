@@ -1,0 +1,14 @@
+---
+micronaut:
+  application:
+    name: micronaut
+  executors:
+    io:
+      type: fixed
+      nThreads: 75
+
+cassandra:
+  keyspace: ks1
+  secure-connect-bundle: /var/secure-connect-framework-compare.zip
+  username: datastax
+  password: datastax

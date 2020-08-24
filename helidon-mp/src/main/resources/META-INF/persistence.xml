@@ -7,6 +7,6 @@
     <persistence-unit name="greeting" transaction-type="JTA">
         <description>A persistence unit for the greeting example.</description>
         <jta-data-source>dataSource</jta-data-source>
-        <class>lizzy.medium.compare.helidon.Issue</class>
+        <class>com.datastax.examples.helidon.Issue</class>
     </persistence-unit>
 </persistence>
