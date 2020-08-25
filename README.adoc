@@ -22,7 +22,8 @@ brew install jmeter
   
 === Astra Secure Connect Bundle
 
-Create a new link:https://astra.datastax.com/[Astra cluster] and execute this cql:
+Create a new link:https://astra.datastax.com/[Astra cluster] with keyspace = `ks1` and username/password = `datastax`.
+Next, please execute this cql to prepare the table:
 
 [source,shell]
 ----
