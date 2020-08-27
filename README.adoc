@@ -1,50 +1,56 @@
-= medium-java-framework-compare
+= A comparison of Java frameworks
 
-== Pre-requisites
+This repo contains a microbenchmark that collects the compile time, startup time, memory usage, and load time of
+simple "Hello World"-like apps in Spring, Quarkus, Micronaut, and Helidon.
 
-Before running the
+As always, you should do your own experimentation using samples that represent your real application.
+
+== Background
+This is an adaptation of Matthias Graf's link:https://medium.com/better-programming/which-java-microservice-framework-should-you-choose-in-2020-4e306a478e58[original work].
+
+This original work led to responses from the project maintainers, worth a view!
+
+- link: https://www.youtube.com/watch?v=rJFgdFIs_k8[Micronaut]
+- link: https://quarkus.io/blog/io-thread-benchmark/[Quarkus]
+
+
+== Running
+Make sure you do all of the Prerequisites first!
+
+To run the microbenchmark, execute the script in this repo link:compare/measure.sh[measure.sh]
 [source,shell]
 ----
-cd compare
+cd <path-to-this-repo>/compare
 ./measure.sh
 ----
 
-=== jmeter
+== Prerequisites
+=== DataStax Astra
 
-Install the jmeter tool and make it available via global `jmeter` command;
-This tool is using `jmeter` for load-testing, i.e: `jmeter -n -t loadtest.jmx -j jmeter.out -l jmeter.log`
+1. Create a free-forever Cassandra Database with DataStax Astra. Use the keyspace name `ks1` and the username/password combo `datastax/datastax` when creating the db to make things easy.  link:https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=java-framework-compare[click here to get started] 🚀
+2. Download the Secure Connect Bundle from the UI to your machine. link: https://docs.astra.datastax.com/docs/obtaining-database-credentials[docs]
+3. Set the ENV variable `ASTRA_DB_BUNDLE` to the location of the secure connect bundle on your machine.
+[source,shell]
+----
+export ASTRA_DB_BUNDLE=<path-to-your-secure-connect-db.zip>
+----
+
+=== Apache JMeter
+
+Install the link:https://jmeter.apache.org/[jmeter] tool and make it available via global `jmeter` command on your machine.
+
+This repo is using `jmeter` for load-testing, i.e: `jmeter -n -t loadtest.jmx -j jmeter.out -l jmeter.log`
 To see more info on how to install JMeter, visit the link:https://jmeter.apache.org/usermanual/get-started.html#install[installation guide].
+
 If you are on Mac OSX you can leverage the brew tool:
 [source,shell]
 ----
 brew install jmeter
 ----
-  
-=== Astra Secure Connect Bundle
 
-Create a new link:https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=java-framework-compare[Astra cluster] with keyspace = `ks1` and username/password = `datastax`.
-Next, please execute this cql to prepare the table:
+=== Java
 
-[source,shell]
-----
-CREATE TABLE issue (
-id UUID PRIMARY KEY,
-name TEXT,
-description TEXT
-);
-
-INSERT INTO issue (id, name, description) VALUES(550e8400-e29b-11d4-a716-446655440000, 'Test', 'This is a test');
-----
-
-set the ENV variable `ASTRA_DB_BUNDLE` to the location of the secure connect bundle on your local file system.
-[source,shell]
-----
-export ASTRA_DB_BUNDLE=/path/to/your/local/secure-connect-framework-compare.zip
-----
-
-=== Java JDK
-
-Install Java SDK (at least 1.8)
+Install Java JDK (at least 1.8)
 
 === Docker
 
