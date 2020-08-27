@@ -59,4 +59,9 @@ public class IssueController {
     public void delete(@PathVariable("id") UUID id) {
         repository.deleteById(id);
     }
+
+    @DeleteMapping
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 }

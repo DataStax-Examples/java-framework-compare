@@ -12,5 +12,7 @@ interface Repository {
 
     void deleteById(UUID id);
 
+    void deleteAll();
+
     Iterable<Issue> findAll();
 }

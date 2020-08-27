@@ -27,13 +27,18 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Issue insert(Issue issue) {
-        cqlSession.execute(SimpleStatement.newInstance("INSERT INTO issue(id, name, description) VALUES (?,?,?)", issue.getId(), issue.getName(), issue.getDescription()));
+        cqlSession.execute(SimpleStatement.newInstance("INSERT INTO issue (id, name, description) VALUES (?,?,?)",
+                issue.getId(), issue.getName(), issue.getDescription()));
         return issue;
     }
 
     @Override
     public void deleteById(UUID id) {
         cqlSession.execute(SimpleStatement.newInstance("DELETE from issue where id = ?", id));
+    }
+
+    public void deleteAll() {
+        cqlSession.execute(SimpleStatement.newInstance("TRUNCATE issue"));
     }
 
     @Override
@@ -44,7 +49,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Issue update(Issue issue) {
-        cqlSession.execute(SimpleStatement.newInstance("UPDATE issue SET name = ?, description = ? WHERE ID = ?",
+        cqlSession.execute(SimpleStatement.newInstance("UPDATE issue SET name = ?, description = ? WHERE id = ?",
                 issue.getName(), issue.getDescription(), issue.getId()));
         return findById(issue.getId()).orElseThrow(RuntimeException::new);
     }

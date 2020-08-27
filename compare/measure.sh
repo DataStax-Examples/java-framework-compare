@@ -1,7 +1,7 @@
 #!/bin/bash
-COMPILE_TIMES=30
-STARTUP_TIMES=30
-LOAD_TIMES=30
+COMPILE_TIMES=5
+STARTUP_TIMES=5
+LOAD_TIMES=5
 
 function check(){
     prepareDocker
@@ -12,8 +12,15 @@ function check(){
 }
 
 function prepareDocker () {
+    printf "*** Preparing Docker ***\n"
     # Delete everything
+    printf "~ Stopping and removing containers ~\n"
+
     docker-compose stop
+    if [ $? -ne 0 ]
+    then
+        fail "Could not stop docker $1"
+    fi
     docker-compose rm -f
 }
 
@@ -34,29 +41,39 @@ function compileTime(){
 }
 
 function clean() {
-    pushd ../$1
-    ../mvnw clean
+    pushd ../$1 > /dev/null
+    printf "*** Cleaning $1 ***\n"
+    ../mvnw clean --quiet
     if [ $? -ne 0 ]
     then
         popd
         fail "Could not clean folder $1"
     fi
-    popd
+    popd > /dev/null
 }
 
 function compile(){
-    pushd ../$1
-    ../mvnw package $2
+    pushd ../$1 > /dev/null
+
+    printf "*** Packaging $1 ***\n"
+    printf "*** This may take a few minutes to pull dependencies ***\n"
+    ../mvnw package $2 --quiet
     if [ $? -ne 0 ]
     then
         popd
         fail "Could not build folder $1"
     fi
-    popd
+    popd > /dev/null
 }
  
 function buildImage(){
-    docker-compose build $1
+    printf "*** Building image for $1 ***\n"
+    if [ -z ${ASTRA_DB_BUNDLE} ]
+    then
+        fail "You must set ASTRA_DB_BUNDLE to the path of your Astra secure connect bundle"
+    fi
+
+    docker-compose build $1 > /dev/null
     if [ $? -ne 0 ]
     then
         fail "Could not build image $1"
@@ -89,16 +106,22 @@ function startup(){
 }
 
 function disposeContainer() {
+    printf "*** Stopping $1 ***\n"
     docker-compose stop $1
+    printf "*** Removing $1 ***\n"
     docker-compose rm -f $1
 }
 
 function startContainer() {
+    printf "*** Starting $1 ***\n"
     docker-compose up -d $1
     cameUp=0
     for (( i=0; i<100; i++))
     do
         sleep 0.3
+        curl -s -X POST http://localhost:8080/issue/ \
+            -d '{"id":"550e8400-e29b-11d4-a716-446655440000","name":"Test", "description":"This is a test"}' \
+            -H "Content-Type: application/json" > /dev/null
         curl -s http://localhost:8080/issue/550e8400-e29b-11d4-a716-446655440000/ | grep "This is a test" > /dev/null
         if [ $? -eq 0 ]
         then
@@ -185,11 +208,19 @@ function prepareForLoad() {
 }
 
 function cleanDocker() {
-    docker stop compare_$1_1
-    docker rm -f compare_$1_1
-    docker rmi -f compare_$1
-    docker image prune -f
-    docker volume prune -f
+    printf "*** Cleaning database ***\n"
+    curl -X DELETE http://localhost:8080/issue/
+    printf "*** Cleaning Docker ***\n"
+    printf "~ Stopping compare_$1_1 ~\n"
+    docker stop compare_$1_1 > /dev/null
+    printf "~ Removing compare_$1_1 ~\n"
+    docker rm -f compare_$1_1 > /dev/null
+    printf "~ Removing image for compare_$1 ~\n"
+    docker rmi -f compare_$1 > /dev/null
+    printf "~ Pruning Images ~\n"
+    docker image prune -f > /dev/null
+    printf "~ Pruning Volumes ~\n"
+    docker volume prune -f > /dev/null
 }
 
 # Remove the old result file
@@ -204,4 +235,4 @@ check "micronaut-mapper"  "micronaut-mapper"
 check "micronaut-driver-fixed-thread-pool" "micronaut-driver-fixed-thread-pool"
 check "micronaut-mapper-fixed-thread-pool" "micronaut-mapper-fixed-thread-pool"
 check "quarkus"        "quarkus-graal"        "-Pnative -Dquarkus.native.container-build=true"
-cat results.csv;
+

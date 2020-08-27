@@ -53,6 +53,10 @@ public class RepositoryImpl implements Repository {
         cqlSession.execute(SimpleStatement.newInstance("DELETE from issue where id = ?", id));
     }
 
+    public void deleteAll() {
+        cqlSession.execute(SimpleStatement.newInstance("TRUNCATE issue"));
+    }
+
     @Override
     public List<Issue> findAll() {
         ResultSet result = cqlSession.execute(SimpleStatement.newInstance("SELECT * FROM issue"));

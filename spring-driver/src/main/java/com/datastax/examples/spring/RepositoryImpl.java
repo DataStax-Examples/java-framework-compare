@@ -41,6 +41,11 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public void deleteAll() {
+        cqlSession.execute(SimpleStatement.newInstance("TRUNCATE issue"));
+    }
+
+    @Override
     public List<Issue> findAll() {
         ResultSet result = cqlSession.execute(SimpleStatement.newInstance("SELECT * FROM issue"));
         return result.all().stream().map(this::mapToIssue).collect(Collectors.toList());

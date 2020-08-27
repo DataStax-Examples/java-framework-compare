@@ -8,6 +8,7 @@ import com.datastax.oss.driver.api.mapper.annotations.Delete;
 import com.datastax.oss.driver.api.mapper.annotations.Insert;
 import com.datastax.oss.driver.api.mapper.annotations.Select;
 import com.datastax.oss.driver.api.mapper.annotations.Update;
+import com.datastax.oss.driver.api.mapper.annotations.Query;
 
 @Dao
 public interface IssueDao {
@@ -24,6 +25,9 @@ public interface IssueDao {
 
 	@Delete(entityClass = Issue.class)
 	void deleteById(UUID id);
+
+	@Query("TRUNCATE issue")
+	void deleteAll();
 
 	@Select
 	PagingIterable<Issue> findAll();

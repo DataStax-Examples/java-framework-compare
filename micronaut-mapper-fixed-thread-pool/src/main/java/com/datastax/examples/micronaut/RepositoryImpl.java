@@ -27,6 +27,10 @@ public class RepositoryImpl implements Repository {
 		issueDao.deleteById(id);
 	}
 
+	public void deleteAll(){
+		issueDao.deleteAll();
+	}
+
 	@Override public Iterable<Issue> findAll() {
 		return issueDao.findAll();
 	}

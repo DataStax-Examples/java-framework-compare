@@ -64,4 +64,10 @@ public class RestInterface {
     public void delete(@PathParam("id") UUID id) {
         repository.deleteById(id);
     }
+
+    @DELETE
+    @Transactional
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 }

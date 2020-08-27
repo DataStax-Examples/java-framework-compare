@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CqlSessionFactory {
 
-	@Value("${cassandra.astra.secure-connect-bundle}")
+	@Value("${astra.secure-connect-bundle}")
 	private String astraSecureConnectBundle;
 	@Value("${cassandra.keyspace-name}")
 	private String keyspace;
