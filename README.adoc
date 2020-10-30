@@ -27,7 +27,7 @@ cd <path-to-this-repo>/compare
 == Prerequisites
 === DataStax Astra
 
-1. Create a free-forever Cassandra Database with DataStax Astra. Use the keyspace name `ks1` and the username/password combo `datastax/datastax` when creating the db to make things easy.  link:https://astra.datastax.com/register?utm_source=github&utm_medium=referral&utm_campaign=java-framework-compare[click here to get started] 🚀
+1. Create a free-forever Cassandra Database with DataStax Astra. Use the keyspace name `ks1` and the username/password combo `datastax/datastax` when creating the db to make things easy.  link:https://astra.datastax.com/register?utm_source=devplay&utm_medium=github&utm_campaign=java-framework-compare[click here to get started] 🚀
 2. Download the Secure Connect Bundle from the UI to your machine. link: https://docs.astra.datastax.com/docs/obtaining-database-credentials[docs]
 3. Set the ENV variable `ASTRA_DB_BUNDLE` to the location of the secure connect bundle on your machine.
 [source,shell]
